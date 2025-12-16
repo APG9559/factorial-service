@@ -1,4 +1,4 @@
-namespace {{NAMESPACE }}.services;
+namespace {{NAMESPACE}}.services;
 
 public class AppSettings : BaseAppSettings
 {

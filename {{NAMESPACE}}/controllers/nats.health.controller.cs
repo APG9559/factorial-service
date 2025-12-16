@@ -2,10 +2,10 @@ using CLOOPS.NATS.Attributes;
 using CLOOPS.NATS.Meta;
 using Microsoft.Extensions.Logging;
 using NATS.Client.Core;
-using { { NAMESPACE} }.services;
-using { { NAMESPACE} }.services.http;
+using {{NAMESPACE}}.services;
+using {{NAMESPACE}}.services.http;
 
-namespace {{NAMESPACE }}.controllers;
+namespace {{NAMESPACE}}.controllers;
 
 public class HealthController
 {
