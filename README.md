@@ -1,7 +1,9 @@
 Factorial Microservice
+
 A lightweight .NET microservice that calculates the factorial of a given number using NATS for messaging. This service subscribes to NATS subjects, processes calculation requests asynchronously, and returns detailed results including the calculated factorial and digit count.
 
 Features
+
 NATS Integration: Listens for requests on the factorial.calculate subject.
 
 Asynchronous Processing: Handles heavy calculations without blocking the main thread using Task and async/await patterns.
@@ -73,6 +75,7 @@ Request Command: Send a JSON payload with the number you want to calculate (e.g.
 
 nats request factorial.calculate "{\"number\": 5}"
 Expected Response: You will receive a JSON response containing the input number, the calculated factorial, and the count of digits in the result:
+{"number":10,"factorial":"3628800","digitCount":7}
 ```
 ``` JSON
 
