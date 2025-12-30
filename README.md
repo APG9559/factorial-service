@@ -1,159 +1,84 @@
-<div style="text-align:center">
-    <div>
-        <h1>
-            Cloops Microservice Template
-        </h1>
-    </div>
-    <div style="display:flex; gap: 8px; justify-content: center; align-items:center">
-        <img src="https://img.shields.io/badge/template-ready-brightgreen">
-        <img src="https://img.shields.io/badge/.NET-9.0-purple">
-    </div>
-</div>
+Factorial Microservice
+A lightweight .NET microservice that calculates the factorial of a given number using NATS for messaging. This service subscribes to NATS subjects, processes calculation requests asynchronously, and returns detailed results including the calculated factorial and digit count.
 
-# Getting Started
+Features
+NATS Integration: Listens for requests on the factorial.calculate subject.
 
-This is a GitHub template repository for creating Cloops microservices. **You must run the setup script after cloning to bootstrap your project.**
+Asynchronous Processing: Handles heavy calculations without blocking the main thread using Task and async/await patterns.
 
-> To learn more about `cloops.microservices`, please checkout our docs on [GitHub](https://github.com/connectionloops/cloops.microservices/tree/main/docs)
+BigInteger Support: Capable of calculating large factorials (up to 100!) that exceed standard integer limits.
 
-## ⚠️ IMPORTANT: Run Setup Script First!
+Health Checks: Includes a built-in health check responder on health.factorialService.
 
-**Before doing anything else, you MUST run the setup script to bootstrap your project:**
+Configurable: Easily adjustable settings via a standard .env configuration file.
+
+Prerequisites
+Before running this project, ensure you have the following installed on your machine:
+
+.NET 9.0 SDK
+
+NATS Server (running locally or via Docker)
+
+NATS CLI (optional, recommended for testing)
+
+Setup and Installation
+Clone the repository
+
+```Bash
+
+git clone https://github.com/APG9559/factorial-service.git
+cd factorial-service
+```
+Configure Environment Variables Ensure the .env file is located inside the factorialService folder (the same folder as Program.cs). It should contain the following settings:
+
+```Ini, TOML
+
+NATS_URL=nats://localhost:4222
+ENABLE_NATS_CONSUMERS=true
+DOTNET_ENVIRONMENT=Development
+```
+Restore Dependencies Navigate to the project directory and restore the NuGet packages:
 
 ```bash
-chmod +x setup.sh
-./setup.sh
+
+cd factorialService
+dotnet restore
 ```
+Running the Service
+Start the NATS Server Ensure your NATS server is running. If you are using the executable:
 
-The script will prompt you for your namespace (e.g., `my.service` or `MyService`) and automatically:
+```DOS
 
-- Replace all `factorialService` placeholders in your code
-- Rename project folders from `factorialService` to your namespace
-- Rename `.csproj` files to match your namespace
-- Update all configuration files (Dockerfile, scripts, etc.)
-
-> **Note:** If you used GitHub Actions to set up the template, the script will detect this and exit as a NO-OP (no operation needed).
-
-## Bootstrapping Process
-
-When you clone this template, the repository contains placeholder folders and files:
-
-- `factorialService/` - Main project folder (will be renamed to your namespace)
-- `factorialService.Tests/` - Test project folder (will be renamed to your namespace)
-- All code files contain `factorialService` placeholders that need to be replaced
-
-The setup process (`./setup.sh`) performs the following transformations:
-
-1. **Replaces placeholders** in all `.cs`, `.csproj`, `.sh`, `Dockerfile`, and other config files
-2. **Renames project files**: `factorialService.csproj` → `{YourNamespace}.csproj`
-3. **Renames folders**: `factorialService/` → `{YourNamespace}/`
-4. **Updates paths** in scripts and configuration files
-
-After running `./setup.sh`, your project structure will be ready to use with your chosen namespace.
-
-## Setup Options
-
-### Option 1: Setup Script (Recommended for Local Development)
+nats-server.exe
+```
+Or if using Docker:
 
 ```bash
-chmod +x setup.sh
-./setup.sh
-# Enter your namespace when prompted (e.g., my.service)
+docker run -d --name nats-server -p 4222:4222 nats:latest
 ```
+Run the Microservice Start the application using the .NET CLI:
 
-### Option 2: GitHub Actions (Recommended for Automated Setup)
-
-1. Go to the **Actions** tab in your repository
-2. Select **Setup Template** workflow
-3. Click **Run workflow**
-4. Enter your namespace when prompted
-5. The workflow will automatically replace placeholders and commit the changes
-
-> **Note:** If GitHub Actions has already run, the `./setup.sh` script will detect this and exit gracefully (NO-OP).
-
-### Option 3: Manual Setup
-
-If you prefer to set up manually (not recommended):
-
-1. Replace all occurrences of `factorialService` with your actual namespace
-2. Rename the `factorialService` folder to your namespace
-3. Rename the `factorialService.Tests` folder to `{YourNamespace}.Tests`
-4. Rename `factorialService/factorialService.csproj` to `{YourNamespace}/{YourNamespace}.csproj`
-5. Rename `factorialService.Tests/factorialService.Tests.csproj` to `{YourNamespace}.Tests/{YourNamespace}.Tests.csproj`
-6. Update `Dockerfile` ENTRYPOINT with your executable name
-7. Update NATS subjects in controllers and scripts
-
-## Project Structure
-
-After setup, your project will have the following structure:
-
+```Bash
+dotnet run
 ```
-{YourNamespace}/
-  ├── {YourNamespace}.csproj
-  ├── Program.cs
-  ├── controllers/
-  ├── services/
-  ├── schema/
-  ├── util/
-  └── Dockerfile
+Verify the Service is Running	
+The application logs should indicate that it has connected to NATS and subscribed to factorial.calculate.
 
-{YourNamespace}.Tests/
-  ├── {YourNamespace}.Tests.csproj
-  └── Controllers/
-```
+Usage and Testing
+You can test the service by sending a request using the NATS CLI tool.
 
-## Local Setup
-
-### Prerequisites
-
-The repo needs the following local setup infrastructure dependencies:
-
-- **NATS Server** - For messaging
-- **.NET 9.0 SDK** - For building and running
-
-### Running the Project Locally
-
-**First, make sure you've run `./setup.sh` to bootstrap your project!**
-
-It is assumed that your environment variables are loaded from `.env` file. Please use a dedicated config and secret management solution. Please see our docs around config for more info.
+Request Command: Send a JSON payload with the number you want to calculate (e.g., 5):
 
 ```bash
-# After running ./setup.sh, run the app
-chmod +x run.sh
-./run.sh
 
-# That's it, you are set, use nats requests in {YourNamespace}/nats/ to test the service
-# e.g.
-cd {YourNamespace}/nats
-./health.sh
+nats request factorial.calculate "{\"number\": 5}"
+Expected Response: You will receive a JSON response containing the input number, the calculated factorial, and the count of digits in the result:
 ```
+``` JSON
 
-## Features
-
-- ✅ **NATS Integration** - Built-in NATS client with consumer attributes
-- ✅ **Dependency Injection** - Full DI support with Microsoft.Extensions
-- ✅ **Background Services** - Scheduled tasks with cron expressions
-- ✅ **HTTP Client** - Example HTTP service integration
-- ✅ **Metrics** - Application metrics with System.Diagnostics.Metrics
-- ✅ **Testing** - XUnit test project with Moq
-- ✅ **Docker** - Ready-to-use Dockerfile
-
-## Alive Nudge
-
-The repo out of the box ships with an AliveNudge background service that just logs `service executing nudge` every 30 seconds. This is just to demonstrate how to do scheduled tasks in background. Please remove the file `services/background/alive.nudge.cs` to get rid of it.
-
-## Next Steps
-
-1. **Update README.md** - Add your project-specific information
-2. **Configure Services** - Update `AppSettings.cs` with your configuration
-3. **Add Your Controllers** - Create NATS consumers in the `controllers/` folder
-4. **Write Tests** - Add tests in the `{YourNamespace}.Tests/` project
-5. **Update Schema** - Customize NATS message types in the `schema/` folder
-
-## Documentation
-
-To learn more about `cloops.microservices`, please checkout our docs on [GitHub](https://github.com/connectionloops/cloops.microservices/tree/main/docs)
-
-## Support
-
-For issues and questions, please open an issue in the [cloops.microservices](https://github.com/connectionloops/cloops.microservices) repository.
+{
+  "number": 5,
+  "factorial": "120",
+  "digitCount": 3
+}
+```
