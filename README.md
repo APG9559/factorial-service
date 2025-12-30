@@ -1,20 +1,20 @@
-Factorial Microservice
+**Factorial Microservice**
 
 A lightweight .NET microservice that calculates the factorial of a given number using NATS for messaging. This service subscribes to NATS subjects, processes calculation requests asynchronously, and returns detailed results including the calculated factorial and digit count.
 
-Features
+**Features** -
 
-NATS Integration: Listens for requests on the factorial.calculate subject.
+**NATS Integration:** Listens for requests on the factorial.calculate subject.
 
-Asynchronous Processing: Handles heavy calculations without blocking the main thread using Task and async/await patterns.
+**Asynchronous Processing:** Handles heavy calculations without blocking the main thread using Task and async/await patterns.
 
-BigInteger Support: Capable of calculating large factorials (up to 100!) that exceed standard integer limits.
+**BigInteger Support:** Capable of calculating large factorials (up to 100!) that exceed standard integer limits.
 
-Health Checks: Includes a built-in health check responder on health.factorialService.
+**Health Checks:** Includes a built-in health check responder on health.factorialService.
 
-Configurable: Easily adjustable settings via a standard .env configuration file.
+**Configurable:** Easily adjustable settings via a standard .env configuration file.
 
-Prerequisites
+**Prerequisites ** 
 Before running this project, ensure you have the following installed on your machine:
 
 .NET 9.0 SDK
@@ -23,7 +23,7 @@ NATS Server (running locally or via Docker)
 
 NATS CLI (optional, recommended for testing)
 
-Setup and Installation
+**Setup and Installation**
 Clone the repository
 
 ```Bash
