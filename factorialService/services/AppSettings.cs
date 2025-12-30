@@ -1,4 +1,4 @@
-namespace {{NAMESPACE}}.services;
+namespace factorialService.services;
 
 public class AppSettings : BaseAppSettings
 {

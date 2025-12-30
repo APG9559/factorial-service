@@ -1,9 +1,9 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using CLOOPS.microservices.Extensions;
-using {{NAMESPACE}};
+using factorialService;
 
-namespace {{NAMESPACE}}.services.background
+namespace factorialService.services.background
 {
     /// <summary>
     /// Background service that just logs every 30 seconds to indicate that the service is alive

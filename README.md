@@ -27,8 +27,8 @@ chmod +x setup.sh
 
 The script will prompt you for your namespace (e.g., `my.service` or `MyService`) and automatically:
 
-- Replace all `{{NAMESPACE}}` placeholders in your code
-- Rename project folders from `{{NAMESPACE}}` to your namespace
+- Replace all `factorialService` placeholders in your code
+- Rename project folders from `factorialService` to your namespace
 - Rename `.csproj` files to match your namespace
 - Update all configuration files (Dockerfile, scripts, etc.)
 
@@ -38,15 +38,15 @@ The script will prompt you for your namespace (e.g., `my.service` or `MyService`
 
 When you clone this template, the repository contains placeholder folders and files:
 
-- `{{NAMESPACE}}/` - Main project folder (will be renamed to your namespace)
-- `{{NAMESPACE}}.Tests/` - Test project folder (will be renamed to your namespace)
-- All code files contain `{{NAMESPACE}}` placeholders that need to be replaced
+- `factorialService/` - Main project folder (will be renamed to your namespace)
+- `factorialService.Tests/` - Test project folder (will be renamed to your namespace)
+- All code files contain `factorialService` placeholders that need to be replaced
 
 The setup process (`./setup.sh`) performs the following transformations:
 
 1. **Replaces placeholders** in all `.cs`, `.csproj`, `.sh`, `Dockerfile`, and other config files
-2. **Renames project files**: `{{NAMESPACE}}.csproj` → `{YourNamespace}.csproj`
-3. **Renames folders**: `{{NAMESPACE}}/` → `{YourNamespace}/`
+2. **Renames project files**: `factorialService.csproj` → `{YourNamespace}.csproj`
+3. **Renames folders**: `factorialService/` → `{YourNamespace}/`
 4. **Updates paths** in scripts and configuration files
 
 After running `./setup.sh`, your project structure will be ready to use with your chosen namespace.
@@ -75,11 +75,11 @@ chmod +x setup.sh
 
 If you prefer to set up manually (not recommended):
 
-1. Replace all occurrences of `{{NAMESPACE}}` with your actual namespace
-2. Rename the `{{NAMESPACE}}` folder to your namespace
-3. Rename the `{{NAMESPACE}}.Tests` folder to `{YourNamespace}.Tests`
-4. Rename `{{NAMESPACE}}/{{NAMESPACE}}.csproj` to `{YourNamespace}/{YourNamespace}.csproj`
-5. Rename `{{NAMESPACE}}.Tests/{{NAMESPACE}}.Tests.csproj` to `{YourNamespace}.Tests/{YourNamespace}.Tests.csproj`
+1. Replace all occurrences of `factorialService` with your actual namespace
+2. Rename the `factorialService` folder to your namespace
+3. Rename the `factorialService.Tests` folder to `{YourNamespace}.Tests`
+4. Rename `factorialService/factorialService.csproj` to `{YourNamespace}/{YourNamespace}.csproj`
+5. Rename `factorialService.Tests/factorialService.Tests.csproj` to `{YourNamespace}.Tests/{YourNamespace}.Tests.csproj`
 6. Update `Dockerfile` ENTRYPOINT with your executable name
 7. Update NATS subjects in controllers and scripts
 

@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace {{NAMESPACE}}.services;
+namespace factorialService.services;
 
 public class EchoService
 {

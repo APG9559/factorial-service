@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # GitHub Template Setup Script
-# This script replaces {{NAMESPACE}} placeholders with your actual namespace
+# This script replaces factorialService placeholders with your actual namespace
 
 set -e
 
@@ -15,10 +15,10 @@ echo -e "${GREEN}=== GitHub Template Setup ===${NC}"
 echo ""
 
 # Check if setup has already been completed (NO-OP check)
-# If {{NAMESPACE}} folders don't exist, check if setup was already done
-if [ ! -d "{{NAMESPACE}}" ] && [ ! -d "{{NAMESPACE}}.Tests" ]; then
-    # Look for .csproj files that don't contain {{NAMESPACE}} (indicating setup was done)
-    EXISTING_PROJECTS=$(find . -maxdepth 2 -name "*.csproj" ! -path "./.git/*" ! -name "*{{NAMESPACE}}*" 2>/dev/null | head -1)
+# If factorialService folders don't exist, check if setup was already done
+if [ ! -d "factorialService" ] && [ ! -d "factorialService.Tests" ]; then
+    # Look for .csproj files that don't contain factorialService (indicating setup was done)
+    EXISTING_PROJECTS=$(find . -maxdepth 2 -name "*.csproj" ! -path "./.git/*" ! -name "*factorialService*" 2>/dev/null | head -1)
     if [ -n "$EXISTING_PROJECTS" ]; then
         echo -e "${GREEN}✓ Setup has already been completed (likely by GitHub Actions)${NC}"
         echo -e "${YELLOW}This script is a NO-OP. Your project is ready to use!${NC}"
@@ -60,9 +60,9 @@ replace_in_file() {
     if [ -f "$file" ]; then
         # Use sed with different syntax for macOS vs Linux
         if [[ "$OSTYPE" == "darwin"* ]]; then
-            sed -i '' "s/{{NAMESPACE}}/${NAMESPACE}/g" "$file"
+            sed -i '' "s/factorialService/${NAMESPACE}/g" "$file"
         else
-            sed -i "s/{{NAMESPACE}}/${NAMESPACE}/g" "$file"
+            sed -i "s/factorialService/${NAMESPACE}/g" "$file"
         fi
     fi
 }
@@ -83,8 +83,8 @@ replace_in_all_files() {
 echo -e "${YELLOW}Replacing placeholders in files...${NC}"
 
 # Replace in all files BEFORE renaming folders
-replace_in_all_files "{{NAMESPACE}}"
-replace_in_all_files "{{NAMESPACE}}.Tests"
+replace_in_all_files "factorialService"
+replace_in_all_files "factorialService.Tests"
 replace_in_file "run.sh"
 replace_in_file "README.md"
 replace_in_file "setup.sh"
@@ -92,7 +92,7 @@ replace_in_file "setup.sh"
 echo -e "${GREEN}✓ Placeholders replaced${NC}"
 
 # Verify replacements worked
-REMAINING_PLACEHOLDERS=$(grep -r "{{NAMESPACE}}" "{{NAMESPACE}}" "{{NAMESPACE}}.Tests" 2>/dev/null | wc -l | tr -d ' ' || echo "0")
+REMAINING_PLACEHOLDERS=$(grep -r "factorialService" "factorialService" "factorialService.Tests" 2>/dev/null | wc -l | tr -d ' ' || echo "0")
 if [ "$REMAINING_PLACEHOLDERS" -gt 0 ]; then
     echo -e "${YELLOW}Warning: Found $REMAINING_PLACEHOLDERS remaining placeholders after replacement${NC}"
 fi
@@ -100,35 +100,35 @@ fi
 # Rename .csproj files first (before renaming folders)
 echo -e "${YELLOW}Renaming project files...${NC}"
 
-if [ -f "{{NAMESPACE}}/{{NAMESPACE}}.csproj" ]; then
-    mv "{{NAMESPACE}}/{{NAMESPACE}}.csproj" "{{NAMESPACE}}/${NAMESPACE}.csproj"
-    echo -e "${GREEN}✓ Renamed {{NAMESPACE}}/{{NAMESPACE}}.csproj to ${NAMESPACE}.csproj${NC}"
+if [ -f "factorialService/factorialService.csproj" ]; then
+    mv "factorialService/factorialService.csproj" "factorialService/${NAMESPACE}.csproj"
+    echo -e "${GREEN}✓ Renamed factorialService/factorialService.csproj to ${NAMESPACE}.csproj${NC}"
 fi
 
-if [ -f "{{NAMESPACE}}.Tests/{{NAMESPACE}}.Tests.csproj" ]; then
-    mv "{{NAMESPACE}}.Tests/{{NAMESPACE}}.Tests.csproj" "{{NAMESPACE}}.Tests/${NAMESPACE}.Tests.csproj"
-    echo -e "${GREEN}✓ Renamed {{NAMESPACE}}.Tests/{{NAMESPACE}}.Tests.csproj to ${NAMESPACE}.Tests.csproj${NC}"
+if [ -f "factorialService.Tests/factorialService.Tests.csproj" ]; then
+    mv "factorialService.Tests/factorialService.Tests.csproj" "factorialService.Tests/${NAMESPACE}.Tests.csproj"
+    echo -e "${GREEN}✓ Renamed factorialService.Tests/factorialService.Tests.csproj to ${NAMESPACE}.Tests.csproj${NC}"
 fi
 
 # Rename folders
 echo -e "${YELLOW}Renaming folders...${NC}"
 
-if [ -d "{{NAMESPACE}}" ]; then
-    mv "{{NAMESPACE}}" "${NAMESPACE}"
-    echo -e "${GREEN}✓ Renamed {{NAMESPACE}} to ${NAMESPACE}${NC}"
+if [ -d "factorialService" ]; then
+    mv "factorialService" "${NAMESPACE}"
+    echo -e "${GREEN}✓ Renamed factorialService to ${NAMESPACE}${NC}"
 fi
 
-if [ -d "{{NAMESPACE}}.Tests" ]; then
-    mv "{{NAMESPACE}}.Tests" "${NAMESPACE}.Tests"
-    echo -e "${GREEN}✓ Renamed {{NAMESPACE}}.Tests to ${NAMESPACE}.Tests${NC}"
+if [ -d "factorialService.Tests" ]; then
+    mv "factorialService.Tests" "${NAMESPACE}.Tests"
+    echo -e "${GREEN}✓ Renamed factorialService.Tests to ${NAMESPACE}.Tests${NC}"
 fi
 
 # Update run.sh to use correct path
 if [ -f "run.sh" ]; then
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        sed -i '' "s/cd {{NAMESPACE}}/cd ${NAMESPACE}/g" "run.sh"
+        sed -i '' "s/cd factorialService/cd ${NAMESPACE}/g" "run.sh"
     else
-        sed -i "s/cd {{NAMESPACE}}/cd ${NAMESPACE}/g" "run.sh"
+        sed -i "s/cd factorialService/cd ${NAMESPACE}/g" "run.sh"
     fi
 fi
 
